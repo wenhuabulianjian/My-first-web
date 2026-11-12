@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>表达练习</title>
+</head>
+<body>
+  <h1>我的表达练习网站</h1>
+  <div id="word">点击按钮抽题</div>
+<div id="timer"></div>
+<button id="btn">抽题</button>
+<script>
+  const words = ["如果明天就是世界末日，你会怎么过今天", "说服一个陌生人早点睡觉"];
+
+  let timerId = null;
+
+  function startTimer(seconds, label, onFinish) {
+    clearInterval(timerId);
+    let left = seconds;
+    document.getElementById("timer").textContent = label + " " + left + " 秒";
+
+    timerId = setInterval(function () {
+      left = left - 1;
+      document.getElementById("timer").textContent = label + " " + left + " 秒";
+      if (left <= 0) {
+        clearInterval(timerId);
+        onFinish();
+      }
+    }, 1000);
+  }
+
+  document.getElementById("btn").addEventListener("click", function () {
+    const i = Math.floor(Math.random() * words.length);
+    document.getElementById("word").textContent = words[i];
+
+    startTimer(15, "准备", function () {
+      startTimer(60, "表达", function () {
+        document.getElementById("timer").textContent = "时间到，说说你刚才卡在哪";
+      });
+    });
+  });
+</script>
+<style>
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    padding-top: 80px;
+    background: #111;
+    color: #eee;
+  }
+  #word { font-size: 44px; margin: 40px 20px; }
+  #timer { font-size: 64px; color: #4ade80; min-height: 80px; }
+  button {
+    font-size: 20px;
+    padding: 12px 36px;
+    border: none;
+    border-radius: 8px;
+    background: #4ade80;
+    cursor: pointer;
+  }
+</style>
+</body>
+</html>
